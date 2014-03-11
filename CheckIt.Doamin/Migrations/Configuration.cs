@@ -1,18 +1,19 @@
-namespace CheckIt.Doamin.Migrations
+namespace CheckIt.Domain.Migrations
 {
+    using CheckIt.Entities;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<CheckIt.Doamin.DbBuilderContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<CheckIt.Domain.CheckItContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(CheckIt.Doamin.DbBuilderContext context)
+        protected override void Seed(CheckIt.Domain.CheckItContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -26,6 +27,12 @@ namespace CheckIt.Doamin.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+            context.Users.AddOrUpdate(
+                u => u.UserName,
+                new User { UserName = "Administrator", PasswordHash = "", Email = "hassan.reyes@gmail.com"},
+                new User { UserName = "_Temp_", PasswordHash = "", IsTemporal = true}
+                );
         }
     }
 }
